@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "882901132612",
+    "project_id": "turmalinajobs",
+    "storage_bucket": "turmalinajobs.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882901132612:android:632caf25d8b2788e9ca311",
+        "android_client_info": {
+          "package_name": "br.com.devjr.turmalina_jobs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOAJbhYbkVLef6BrlsG7Mva289ULqgg2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
