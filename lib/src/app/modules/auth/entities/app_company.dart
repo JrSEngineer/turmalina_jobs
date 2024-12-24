@@ -1,4 +1,4 @@
-import 'package:turmalina_jobs/src/app/modules/auth/entities/base_identifier_entity.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 
 class AppCompany extends BaseIdentifierEntity {
   AppCompany({
@@ -8,8 +8,7 @@ class AppCompany extends BaseIdentifierEntity {
     required super.email,
   });
 
-  @override
-  BaseIdentifierEntity fromMap(Map<String, dynamic> map) {
+  factory AppCompany.fromMap(Map<String, dynamic> map) {
     return AppCompany(
       id: map['id'],
       fullName: map['fullName'],

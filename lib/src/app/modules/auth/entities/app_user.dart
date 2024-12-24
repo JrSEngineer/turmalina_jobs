@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:turmalina_jobs/src/app/modules/auth/entities/base_identifier_entity.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 
 class AppUser extends BaseIdentifierEntity {
   AppUser({
@@ -9,8 +9,7 @@ class AppUser extends BaseIdentifierEntity {
     required super.email,
   });
 
-  @override
-  BaseIdentifierEntity fromMap(Map<String, dynamic> map) {
+  factory AppUser.fromMap(Map<String, dynamic> map) {
     return AppUser(
       id: map['id'],
       fullName: map['fullName'],
