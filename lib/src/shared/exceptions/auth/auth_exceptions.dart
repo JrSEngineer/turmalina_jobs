@@ -4,8 +4,8 @@ class LoginException extends BaseException {
   LoginException({required super.message});
 }
 
-class RegisterUserException extends BaseException {
-  RegisterUserException({required super.message});
+class RegisterAccountException extends BaseException {
+  RegisterAccountException({required super.message});
 }
 
 class RecoveryPasswordException extends BaseException {
