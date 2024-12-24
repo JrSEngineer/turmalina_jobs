@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 3), () {
-      Modular.to.navigate('./home/');
+      Modular.to.navigate('/login');
     });
   }
 
@@ -28,6 +28,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 }
 
-Widget _child() => const AppContainer(
-      child: AppLogo(logoSize: 172),
+Widget _child() => AppLogo(
+      size: LogoSize.small,
     );
