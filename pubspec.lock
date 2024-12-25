@@ -481,7 +481,7 @@ packages:
     source: hosted
     version: "1.0.6"
   mobx:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: mobx
       sha256: bf1a90e5bcfd2851fc6984e20eef69557c65d9e4d0a88f5be4cf72c9819ce6b0
