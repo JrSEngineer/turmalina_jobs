@@ -11,8 +11,8 @@ class AppContainer extends StatelessWidget {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
 
-    final verticalPadding = height * 0.012;
-    final horizontalPadding = width * 0.032;
+    final verticalPadding = height * 0.036;
+    final horizontalPadding = width * 0.064;
 
     return Scaffold(
       body: Container(
