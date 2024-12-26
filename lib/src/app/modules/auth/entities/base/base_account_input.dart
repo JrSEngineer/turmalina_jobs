@@ -19,7 +19,7 @@ abstract class BaseAccountInput {
       'fullName': fullName,
       'document': document,
       'phoneNumber': phoneNumber,
-      'newAccountInput': newAccountInput.toMap(),
+      'authentication': newAccountInput.toMap(),
     };
   }
 }
