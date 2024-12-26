@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/view/widgets/app_divider.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_button.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_container.dart';
@@ -50,7 +51,7 @@ Widget _child(BuildContext context) {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    return value != null || value!.isEmpty ? null : 'Por favor, informe um e-mail válido.';
+                    return value == null || value.isEmpty ? 'Por favor, informe um e-mail válido.' : null;
                   },
                   onChanged: (value) {},
                 ),
@@ -85,28 +86,38 @@ Widget _child(BuildContext context) {
         children: [
           AppButton(
             onTap: () {},
-            text: 'Entrar',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
             backgroundColor: Theme.of(context).colorScheme.secondary,
             verticalPadding: buttonVerticalPadding,
+            child: Text(
+              'Entrar',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+            ),
           ),
           SizedBox(height: pageGapSpacing * 0.1),
           AppDivider(width: width, text: 'Ou'),
           SizedBox(height: pageGapSpacing * 0.1),
           AppButton(
             onTap: () {},
-            text: 'Use sua conta Google',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
             backgroundColor: Theme.of(context).colorScheme.onPrimary,
             verticalPadding: buttonVerticalPadding,
             borderColor: Theme.of(context).colorScheme.secondary,
+            child: Text(
+              'Use sua conta Google',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
           ),
           SizedBox(height: pageGapSpacing),
           Text('Caso ainda não tenha uma conta', style: Theme.of(context).textTheme.titleMedium),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Modular.to.pushNamed('./register');
+            },
             child: Text(
               'Cadastre-se',
               style: Theme.of(context).textTheme.headlineMedium,
