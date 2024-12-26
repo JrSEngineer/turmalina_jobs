@@ -11,7 +11,10 @@ final lightTheme = ThemeData(
     onError: const Color(0xFFFAF4FF),
     background: const Color(0xFFFAF4FF),
     onBackground: const Color(0xFF321834),
-    surface: Colors.blue,
+    surface: const Color(0xffD8D0D8),
     onSurface: const Color(0xFF321834),
+    tertiary: const Color(0xFFC0B3C0),
+    primaryContainer: const Color(0xFF5A5A5A),
+    onPrimaryContainer: const Color(0xFF9F999F),
   ),
 );
