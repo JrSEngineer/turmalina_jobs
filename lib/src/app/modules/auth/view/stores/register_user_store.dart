@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/datasource/interfaces/iauth_repository.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/inputs/new_account_input.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/inputs/new_user_input.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/enums/account_type.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
 
 part 'register_user_store.g.dart';
@@ -33,6 +34,7 @@ abstract class _RegisterUserStore with Store {
       password: '',
       confirmationPassword: '',
     ),
+    accountType: AccountType.user,
   );
 
   @observable

@@ -7,6 +7,7 @@ import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_account_i
 import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/inputs/login_input.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/inputs/recovery_password_input.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/enums/account_type.dart';
 import 'package:turmalina_jobs/src/shared/backend/app_collections.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/auth/auth_exceptions.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
@@ -26,9 +27,9 @@ class FirebaseAuthRepository implements IAuthRepository {
         password: input.newAccountInput.password,
       );
 
-      final usersCollection = _firebase.collection(
-        AppCollections.USERS,
-      );
+      String collectionName = _setUserCollection(input.accountType);
+
+      final usersCollection = _firebase.collection(collectionName);
 
       final newUserMap = input.toMap();
 
@@ -62,5 +63,16 @@ class FirebaseAuthRepository implements IAuthRepository {
   Future<BaseException?> recoverPassword(RecoveryPasswordInput input) {
     // TODO: implement recoverPassword
     throw UnimplementedError();
+  }
+
+  String _setUserCollection(AccountType accountType) {
+    switch (accountType) {
+      case AccountType.user:
+        return AppCollections.USERS;
+      case AccountType.company:
+        return AppCollections.COMPANIES;
+      default:
+        return AppCollections.USERS;
+    }
   }
 }
