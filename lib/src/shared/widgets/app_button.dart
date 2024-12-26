@@ -7,7 +7,7 @@ class AppButton extends StatelessWidget {
     required this.onTap,
     this.radius = 4,
     this.verticalPadding = 4,
-    this.text = '',
+    this.child,
     this.style,
     this.backgroundColor,
     this.borderColor,
@@ -16,7 +16,7 @@ class AppButton extends StatelessWidget {
   void Function() onTap;
   double radius;
   double verticalPadding;
-  String text;
+  Widget? child;
   TextStyle? style;
   Color? backgroundColor;
   Color? borderColor;
@@ -38,7 +38,7 @@ class AppButton extends StatelessWidget {
             color: borderColor ?? Colors.transparent,
           ),
         ),
-        child: Center(child: Text(text, style: style)),
+        child: Center(child: child),
       ),
     );
   }
