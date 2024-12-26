@@ -7,6 +7,7 @@ import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_account_i
 import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/inputs/login_input.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/inputs/recovery_password_input.dart';
+import 'package:turmalina_jobs/src/shared/backend/app_collections.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/auth/auth_exceptions.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
 
@@ -25,22 +26,25 @@ class FirebaseAuthRepository implements IAuthRepository {
         password: input.newAccountInput.password,
       );
 
-      final usersCollection = _firebase.collection('USERS');
+      final usersCollection = _firebase.collection(
+        AppCollections.USERS,
+      );
 
       final newUserMap = input.toMap();
 
       newUserMap['id'] = credential.user?.uid;
 
-      final newUserDocument = await usersCollection.add(newUserMap);
+      final newUserDocument = usersCollection.doc(newUserMap['id'])..set(newUserMap);
 
       final documentSnapshot = await newUserDocument.get();
 
       final createdUserMap = documentSnapshot.data();
 
+      createdUserMap?.putIfAbsent('email', () => input.newAccountInput.email);
+
       final user = AppUser.fromMap(createdUserMap ?? {});
 
       return (null, user);
-      
     } on FirebaseAuthException catch (firebaseException) {
       return (RegisterAccountException(message: firebaseException.message!), null);
     } catch (exception) {
