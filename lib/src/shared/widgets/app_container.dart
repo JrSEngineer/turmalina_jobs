@@ -15,14 +15,16 @@ class AppContainer extends StatelessWidget {
     final horizontalPadding = width * 0.064;
 
     return Scaffold(
-      body: Container(
-        height: height,
-        width: width,
-        padding: EdgeInsets.symmetric(
-          vertical: verticalPadding,
-          horizontal: horizontalPadding,
+      body: SafeArea(
+        child: Container(
+          height: height,
+          width: width,
+          padding: EdgeInsets.symmetric(
+            vertical: verticalPadding,
+            horizontal: horizontalPadding,
+          ),
+          child: child,
         ),
-        child: child,
       ),
     );
   }
