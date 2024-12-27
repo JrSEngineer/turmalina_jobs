@@ -8,6 +8,7 @@ class GeneralHeaderWidget extends StatelessWidget {
     this.widgetBorderColor,
     this.widgetBorderRadius,
     this.internalPadding,
+    this.icon,
     this.image,
     this.title,
     this.subTitle,
@@ -18,6 +19,7 @@ class GeneralHeaderWidget extends StatelessWidget {
   final Color? widgetBorderColor;
   final double? widgetBorderRadius;
   final double? internalPadding;
+  final Widget? icon;
   final Widget? image;
   final Widget? title;
   final Widget? subTitle;
@@ -32,9 +34,10 @@ class GeneralHeaderWidget extends StatelessWidget {
             : null,
         borderRadius: BorderRadius.circular(widgetBorderRadius ?? 4),
       ),
-      padding: EdgeInsets.symmetric(vertical: internalPadding ?? 4, horizontal: (internalPadding ?? 4) * 2),
+      padding: EdgeInsets.all(internalPadding ?? 0),
       child: Row(
         children: [
+          if (icon != null) icon!,
           if (image != null) image!,
           Expanded(
             child: Column(

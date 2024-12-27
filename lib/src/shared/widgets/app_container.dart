@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 
 class AppContainer extends StatelessWidget {
-  const AppContainer({Key? key, required this.child}) : super(key: key);
+  const AppContainer({Key? key, required this.child, this.color}) : super(key: key);
 
   final Widget child;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,10 @@ class AppContainer extends StatelessWidget {
     final verticalPadding = height * 0.016;
     final horizontalPadding = width * 0.064;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: color ?? Theme.of(context).colorScheme.onPrimary,
+        body: Container(
           height: height,
           width: width,
           padding: EdgeInsets.symmetric(
