@@ -37,6 +37,7 @@ flutter:
   assets:
     - assets/images/turmalina_jobs_icon.png
     - assets/images/turmalina_jobs_logo.png
+    - assets/images/app_turmalina_jobs_background.png
 
 flutter_launcher_icons:
   android: true
