@@ -4,7 +4,7 @@ import 'package:turmalina_jobs/src/app/modules/auth/view/pages/recovery_page.dar
 import 'package:turmalina_jobs/src/app/modules/auth/view/pages/register_page.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/view/pages/splash_page.dart';
 import 'package:turmalina_jobs/src/app/modules/home/home_module.dart';
-import 'package:turmalina_jobs/src/app/modules/job_vacancy_module.dart/job_vacancy_module.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/job_vacancy_module.dart';
 
 class AuthModule extends Module {
   @override
