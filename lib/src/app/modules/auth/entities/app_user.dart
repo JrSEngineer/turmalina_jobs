@@ -18,7 +18,7 @@ class AppUser extends BaseIdentifierEntity {
       id: map['id'],
       fullName: map['fullName'],
       document: map['document'],
-      email: map['email'],
+      email: map['authentication']['email'],
       accountType: accountType,
     );
   }

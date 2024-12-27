@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/datasource/interfaces/iauth_repository.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/entities/app_company.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/app_user.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_account_input.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
@@ -54,9 +55,40 @@ class FirebaseAuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<(BaseException?, BaseIdentifierEntity?)> login(LoginInput input) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<(BaseException?, BaseIdentifierEntity?)> login(LoginInput input) async {
+    try {
+      final credential = await _auth.signInWithEmailAndPassword(email: input.email, password: input.password);
+
+      if (credential.user == null) {
+        return (LoginException(message: 'Login não realizado. Verifique seus dados e tente novamente.'), null);
+      }
+
+      final companiesCollection = _firebase.collection(AppCollections.COMPANIES);
+
+      final companyDocument = await companiesCollection.doc(credential.user!.uid).get();
+
+      if (!companyDocument.exists) {
+        final usersCollection = _firebase.collection(AppCollections.USERS);
+
+        final userDocument = await usersCollection.doc(credential.user!.uid).get();
+
+        final userMap = userDocument.data();
+
+        final user = AppUser.fromMap(userMap ?? {});
+
+        return (null, user);
+      }
+
+      final companyMap = companyDocument.data();
+
+      final company = AppCompany.fromMap(companyMap ?? {});
+
+      return (null, company);
+    } on FirebaseAuthException catch (firebaseException) {
+      return (LoginException(message: firebaseException.message!), null);
+    } catch (exception) {
+      return (LoginException(message: 'Um erro inesperado ocorreu: $exception'), null);
+    }
   }
 
   @override

@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/view/stores/auth_store.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/view/widgets/app_divider.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_button.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_container.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_logo.dart';
+import 'package:turmalina_jobs/src/shared/widgets/app_snackbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,15 +18,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late AuthStore store;
+
+  @override
+  void initState() {
+    super.initState();
+
+    store = Modular.get<AuthStore>();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppContainer(
-      child: _child(context),
+      child: _child(context, store),
     );
   }
 }
 
-Widget _child(BuildContext context) {
+Widget _child(BuildContext context, AuthStore store) {
   final formPadding = MediaQuery.sizeOf(context).height * 0.024;
   final buttonVerticalPadding = MediaQuery.sizeOf(context).height * 0.016;
   final pageGapSpacing = MediaQuery.sizeOf(context).height * 0.1;
@@ -37,6 +51,7 @@ Widget _child(BuildContext context) {
             size: LogoSize.medium,
           ),
           Form(
+            key: store.loginFormKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +68,7 @@ Widget _child(BuildContext context) {
                   validator: (value) {
                     return value == null || value.isEmpty ? 'Por favor, informe um e-mail válido.' : null;
                   },
-                  onChanged: (value) {},
+                  onChanged: (value) => store.loginInput.email = value,
                 ),
                 SizedBox(height: formPadding),
                 TextFormField(
@@ -64,9 +79,9 @@ Widget _child(BuildContext context) {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    return value != null || value!.isEmpty ? null : 'Por favor, informe um e-mail válido.';
+                    return value == null || value.isEmpty ? 'Por favor, informe sua senha.' : null;
                   },
-                  onChanged: (value) {},
+                  onChanged: (value) => store.loginInput.password = value,
                 ),
                 SizedBox(height: formPadding),
                 Align(
@@ -84,17 +99,35 @@ Widget _child(BuildContext context) {
       SizedBox(height: pageGapSpacing),
       Column(
         children: [
-          AppButton(
-            onTap: () {},
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            verticalPadding: buttonVerticalPadding,
-            child: Text(
-              'Entrar',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-            ),
+          Observer(
+            builder: (_) {
+              return AppButton(
+                onTap: () async {
+                  if (!store.loginFormKey.currentState!.validate()) {
+                    return;
+                  }
+
+                  await store.login();
+
+                  if (store.loginException != null) {
+                    appSnackbar(context, message: 'Erro ao realizar login. ${store.loginException!.message}');
+
+                    return;
+                  }
+                },
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                verticalPadding: buttonVerticalPadding,
+                child: store.loading //
+                    ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary)
+                    : Text(
+                        'Entrar',
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                      ),
+              );
+            },
           ),
           SizedBox(height: pageGapSpacing * 0.1),
           AppDivider(width: width, text: 'Ou'),
