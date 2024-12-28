@@ -1,5 +1,9 @@
 import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
 
+class GetAllJobVacanciesException extends BaseException {
+  GetAllJobVacanciesException({required super.message});
+}
+
 class GetJobVacancyException extends BaseException {
   GetJobVacancyException({required super.message});
 }

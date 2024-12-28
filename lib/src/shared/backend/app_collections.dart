@@ -3,4 +3,5 @@
 abstract class AppCollections {
   static String USERS = 'USERS';
   static String COMPANIES = 'COMPANIES';
+  static String VACANCIES = 'VACANCIES';
 }
