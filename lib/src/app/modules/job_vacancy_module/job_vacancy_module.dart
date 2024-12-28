@@ -24,7 +24,7 @@ class JobVacancyModule extends Module {
   void routes(RouteManager r) {
     r.child('/', child: (_) => const JobVacancyPage());
     r.child('/chat', child: (_) => const ChatPage());
-    r.child('/create_job_vacancy', child: (_) => const CreateJobVacancyPage());
+    r.child('/create_job_vacancy/:accountId', child: (_) => const CreateJobVacancyPage());
     r.child('/invite_candidate', child: (_) => const InviteCandidatePage());
   }
 }
