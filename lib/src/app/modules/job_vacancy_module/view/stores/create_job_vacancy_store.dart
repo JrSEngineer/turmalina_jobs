@@ -50,7 +50,7 @@ abstract class _CreateJobVacancyStore with Store {
   Future<void> createNewJobVacancy() async {
     _setLoadingValue(true);
 
-    final (exception, _) = await _repository.createNewVacncy(input);
+    final (exception, _) = await _repository.createNewVacancy(input);
 
     if (exception != null) {
       _setcreateJobVacancyExceptionValue(exception);
@@ -68,12 +68,12 @@ abstract class _CreateJobVacancyStore with Store {
   }
 
   @action
-  _setLoadingValue(bool value) {
+  void _setLoadingValue(bool value) {
     _loading = value;
   }
 
   @action
-  _setcreateJobVacancyExceptionValue(BaseException value) {
+  void _setcreateJobVacancyExceptionValue(BaseException value) {
     _createJobVacancyException = value;
   }
 

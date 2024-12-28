@@ -27,6 +27,10 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
     super.initState();
 
     store = Modular.get<CreateJobVacancyStore>();
+
+    final accountId = Modular.args.params['accountId'] as String;
+
+    store.input.postOwner.id = accountId;
   }
 
   @override
@@ -82,7 +86,6 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                       Expanded(
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelStyle: Theme.of(context).textTheme.labelMedium,
                             label: const Text('Nome da Vaga'),
@@ -98,7 +101,6 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                       Expanded(
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                             labelStyle: Theme.of(context).textTheme.labelMedium,
                             label: const Text('Setor da Empresa'),
@@ -206,7 +208,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                     if (store.createJobVacancyException != null) {
                       appSnackbar(
                         context,
-                        message: 'Erro ao criar usuário. ${store.createJobVacancyException!.message}',
+                        message: 'Erro ao criar nova vaga. ${store.createJobVacancyException!.message}',
                       );
                       return;
                     }
