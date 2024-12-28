@@ -41,8 +41,12 @@ class GeneralHeaderWidget extends StatelessWidget {
           if (image != null) image!,
           Expanded(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [if (title != null) title!, if (subTitle != null) subTitle!],
+              children: [
+                if (title != null) title!,
+                if (subTitle != null) subTitle!,
+              ],
             ),
           ),
           Row(
