@@ -45,6 +45,14 @@ class _HomePageState extends State<HomePage> {
                   content: 'Boas Vindas!',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
+                widgets: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.add_circle_outline,
+                    ),
+                  )
+                ],
               ),
               SizedBox(height: pageSpacing),
               const HomeMenuWidget(),
