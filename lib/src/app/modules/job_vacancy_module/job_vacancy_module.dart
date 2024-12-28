@@ -7,6 +7,7 @@ import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/page/crea
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/page/invite_candidate_page.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/page/job_vacancy_page.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/stores/create_job_vacancy_store.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/stores/get_all_job_vacancies_store.dart';
 
 class JobVacancyModule extends Module {
   @override
@@ -18,6 +19,7 @@ class JobVacancyModule extends Module {
   void binds(Injector i) {
     i.addSingleton<IJobVacancyRepository>(FirebaseJobVacancyRepository.new);
     i.addLazySingleton<CreateJobVacancyStore>(CreateJobVacancyStore.new);
+    i.addLazySingleton<GetAllJobVacanciesStore>(GetAllJobVacanciesStore.new);
   }
 
   @override

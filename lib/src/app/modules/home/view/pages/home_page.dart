@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 import 'package:turmalina_jobs/src/app/modules/home/view/widgets/home_menu_widget.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/stores/get_all_job_vacancies_store.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_container.dart';
 import 'package:turmalina_jobs/src/shared/widgets/background_widget.dart';
 import 'package:turmalina_jobs/src/shared/widgets/general_header_widget/general_header_image_widget.dart';
@@ -16,13 +18,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late BaseIdentifierEntity _accountEntity;
+  late BaseIdentifierEntity _account;
+
+  late GetAllJobVacanciesStore jobVacanciesStore;
 
   @override
   void initState() {
     super.initState();
 
-    _accountEntity = Modular.args.data;
+    _account = Modular.args.data;
+
+    jobVacanciesStore = Modular.get<GetAllJobVacanciesStore>();
+
+    jobVacanciesStore.getAllJobVacancies();
   }
 
   @override
@@ -59,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                 widgets: [
                   IconButton(
                     onPressed: () {
-                      Modular.to.pushNamed('/job_vacancy/create_job_vacancy/${_accountEntity.id}');
+                      Modular.to.pushNamed('/job_vacancy/create_job_vacancy/${_account.id}');
                     },
                     icon: const Icon(
                       Icons.add_circle_outline,
@@ -71,49 +79,63 @@ class _HomePageState extends State<HomePage> {
               const HomeMenuWidget(),
               SizedBox(height: pageSpacing),
               Expanded(
-                child: ListView.separated(
-                  itemCount: 6,
-                  itemBuilder: (_, i) {
-                    return Card(
-                      elevation: 8,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      surfaceTintColor: Theme.of(context).colorScheme.onPrimary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          children: [
-                            GeneralHeaderWidget(
-                              image: const GeneralHeaderImageWIdget(
-                                componentImageSize: 72,
-                                componentImageRadius: 8,
-                                componentImageRightMargin: componentImageRightMargin,
-                                imageUrl: image,
-                              ),
-                              title: Text(
-                                'Nome da Empresa ',
-                                style: Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              subTitle: Text(
-                                'Nome do cargo ',
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                                    ),
-                              ),
+                child: Observer(
+                  builder: (_) {
+                    return jobVacanciesStore.loading //
+                        ? SizedBox(
+                            height: MediaQuery.sizeOf(context).height * 0.3,
+                            child: const Center(
+                              child: CircularProgressIndicator(),
                             ),
-                            const SizedBox(height: 24),
-                            Text(
-                                'Descrição da vaga, com informações dadas pelo anunciante, contendo informações úteis como local de trabalho, carga horária, endereço de e-mail e telefone, ou qualquer informação relevante para a vaga.',
-                                style: Theme.of(context).textTheme.bodyLarge)
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (_, i) {
-                    return SizedBox(height: pageSpacing * 0.2);
+                          )
+                        : RefreshIndicator(
+                            onRefresh: () => jobVacanciesStore.getAllJobVacancies(),
+                            child: ListView.separated(
+                              itemCount: jobVacanciesStore.jobVacanciesList.length,
+                              itemBuilder: (_, i) {
+                                final jobVacancy = jobVacanciesStore.jobVacanciesList[i];
+
+                                return Card(
+                                  elevation: 8,
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                  surfaceTintColor: Theme.of(context).colorScheme.onPrimary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      children: [
+                                        GeneralHeaderWidget(
+                                          image: const GeneralHeaderImageWIdget(
+                                            componentImageSize: 72,
+                                            componentImageRadius: 8,
+                                            componentImageRightMargin: componentImageRightMargin,
+                                            imageUrl: image,
+                                          ),
+                                          title: Text(
+                                            jobVacancy.detail.title,
+                                            style: Theme.of(context).textTheme.headlineSmall,
+                                          ),
+                                          subTitle: Text(
+                                            jobVacancy.postOwner.name,
+                                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                                ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 24),
+                                        Text(jobVacancy.detail.description, style: Theme.of(context).textTheme.bodyLarge)
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (_, i) {
+                                return SizedBox(height: pageSpacing * 0.2);
+                              },
+                            ),
+                          );
                   },
                 ),
               )
