@@ -27,8 +27,9 @@ class VacancyDetail {
       'description': description,
       'jobAddress': jobAddress,
       'postDate': postDate.toString(),
-      'interviewDate': interviewDate.toString(),
       'sectionName': sectionName,
+      'interviewDate': interviewDate.toString(),
+      'interviewDateTime': interviewDateTime,
       'vacancyStatus': vacancyStatus.name,
     };
   }

@@ -23,9 +23,9 @@ class JobVacancy {
 
   factory JobVacancy.fromMap(Map<String, dynamic> map) {
     return JobVacancy(
-      id: map['id'],
+      id: map['postOwner']['id'],
       postOwner: VacancyPostOwner.fromMap(map['postOwner']),
-      detail: VacancyDetail.fromMap(map['detail']),
+      detail: VacancyDetail.fromMap(map['vacancyDetail']),
     );
   }
 }
