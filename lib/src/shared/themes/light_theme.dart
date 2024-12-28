@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 final lightTheme = ThemeData(
+  datePickerTheme: const DatePickerThemeData(
+    backgroundColor: Color(0xFFFFFFFF),
+  ),
   colorScheme: ColorScheme(
     brightness: Brightness.light,
     primary: const Color(0xFF321834),
