@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:turmalina_jobs/src/app/modules/home/view/widgets/home_menu_widget.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_container.dart';
 import 'package:turmalina_jobs/src/shared/widgets/background_widget.dart';
@@ -47,7 +48,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 widgets: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Modular.to.pushNamed('/job_vacancy/create_job_vacancy/');
+                    },
                     icon: const Icon(
                       Icons.add_circle_outline,
                     ),
