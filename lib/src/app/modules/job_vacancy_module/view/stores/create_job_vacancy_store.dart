@@ -53,7 +53,7 @@ abstract class _CreateJobVacancyStore with Store {
     final (exception, _) = await _repository.createNewVacancy(input);
 
     if (exception != null) {
-      _setcreateJobVacancyExceptionValue(exception);
+      _setCreateJobVacancyExceptionValue(exception);
 
       _setLoadingValue(false);
 
@@ -73,7 +73,7 @@ abstract class _CreateJobVacancyStore with Store {
   }
 
   @action
-  void _setcreateJobVacancyExceptionValue(BaseException value) {
+  void _setCreateJobVacancyExceptionValue(BaseException value) {
     _createJobVacancyException = value;
   }
 

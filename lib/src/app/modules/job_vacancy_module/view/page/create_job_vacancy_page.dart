@@ -20,17 +20,17 @@ class CreateJobVacancyPage extends StatefulWidget {
 }
 
 class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
-  late CreateJobVacancyStore store;
+  late CreateJobVacancyStore _store;
 
   @override
   void initState() {
     super.initState();
 
-    store = Modular.get<CreateJobVacancyStore>();
+    _store = Modular.get<CreateJobVacancyStore>();
 
     final accountId = Modular.args.params['accountId'] as String;
 
-    store.input.postOwner.id = accountId;
+    _store.input.postOwner.id = accountId;
   }
 
   @override
@@ -65,7 +65,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
             ),
             SizedBox(height: pageSpacing),
             Form(
-              key: store.createJobVacancyFormKey,
+              key: _store.createJobVacancyFormKey,
               child: Column(
                 children: [
                   TextFormField(
@@ -78,7 +78,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                     validator: (value) {
                       return value == null || value.isEmpty ? 'Por favor, informe o nome do anunciante.' : null;
                     },
-                    onChanged: (value) => store.input.postOwner.name = value,
+                    onChanged: (value) => _store.input.postOwner.name = value,
                   ),
                   SizedBox(height: formSpacing),
                   Row(
@@ -94,7 +94,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                           validator: (value) {
                             return value == null || value.isEmpty ? 'Por favor, insira o nome da vaga.' : null;
                           },
-                          onChanged: (value) => store.input.vacancyDetail.title = value,
+                          onChanged: (value) => _store.input.vacancyDetail.title = value,
                         ),
                       ),
                       SizedBox(width: formSpacing),
@@ -109,7 +109,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                           validator: (value) {
                             return value == null || value.isEmpty ? 'Por favor, informe qual o setor da vaga.' : null;
                           },
-                          onChanged: (value) => store.input.vacancyDetail.sectionName = value,
+                          onChanged: (value) => _store.input.vacancyDetail.sectionName = value,
                         ),
                       ),
                     ],
@@ -127,7 +127,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                     validator: (value) {
                       return value == null || value.isEmpty ? 'Por favor, insira uma descrição da vaga.' : null;
                     },
-                    onChanged: (value) => store.input.vacancyDetail.description = value,
+                    onChanged: (value) => _store.input.vacancyDetail.description = value,
                   ),
                   SizedBox(height: formSpacing),
                   TextFormField(
@@ -140,7 +140,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                     validator: (value) {
                       return value == null || value.isEmpty ? 'Por favor, informe qual é o local da entrevista.' : null;
                     },
-                    onChanged: (value) => store.input.vacancyDetail.jobAddress = value,
+                    onChanged: (value) => _store.input.vacancyDetail.jobAddress = value,
                   ),
                   SizedBox(height: formSpacing),
                   Row(
@@ -155,9 +155,9 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                               lastDate: DateTime(2100),
                             );
 
-                            store.input.vacancyDetail.interviewDate = date ?? DateTime.now();
+                            _store.input.vacancyDetail.interviewDate = date ?? DateTime.now();
                           },
-                          initialValue: store.input.vacancyDetail.getInterviewDate(),
+                          initialValue: _store.input.vacancyDetail.getInterviewDate(),
                           decoration: InputDecoration(
                             labelStyle: Theme.of(context).textTheme.labelMedium,
                             label: const Text('Data'),
@@ -177,7 +177,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                           inputFormatters: [
                             MaskTextInputFormatter(mask: '##:##'),
                           ],
-                          onChanged: (value) => store.input.vacancyDetail.interviewDateTime = value,
+                          onChanged: (value) => _store.input.vacancyDetail.interviewDateTime = value,
                         ),
                       ),
                     ],
@@ -191,11 +191,11 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
               builder: (_) {
                 return AppButton(
                   onTap: () async {
-                    if (!store.createJobVacancyFormKey.currentState!.validate()) {
+                    if (!_store.createJobVacancyFormKey.currentState!.validate()) {
                       return;
                     }
 
-                    if (store.invalidDateValue(store.input.vacancyDetail.interviewDateTime)) {
+                    if (_store.invalidDateValue(_store.input.vacancyDetail.interviewDateTime)) {
                       appSnackbar(
                         context,
                         message: 'Formato de hora inválido.',
@@ -203,12 +203,12 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                       return;
                     }
 
-                    await store.createNewJobVacancy();
+                    await _store.createNewJobVacancy();
 
-                    if (store.createJobVacancyException != null) {
+                    if (_store.createJobVacancyException != null) {
                       appSnackbar(
                         context,
-                        message: 'Erro ao criar nova vaga. ${store.createJobVacancyException!.message}',
+                        message: 'Erro ao criar nova vaga. ${_store.createJobVacancyException!.message}',
                       );
                       return;
                     }
@@ -218,7 +218,7 @@ class _CreateJobVacancyPageState extends State<CreateJobVacancyPage> {
                       ),
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   verticalPadding: buttonVerticalPadding,
-                  child: store.loading //
+                  child: _store.loading //
                       ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary)
                       : Text(
                           'Criar Nova Vaga',
