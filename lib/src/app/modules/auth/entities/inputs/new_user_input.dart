@@ -7,5 +7,6 @@ class NewUserInput extends BaseAccountInput {
     required super.document,
     required super.phoneNumber,
     required super.newAccountInput,
+    required super.accountType,
   });
 }

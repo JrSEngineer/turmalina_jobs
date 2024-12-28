@@ -18,6 +18,8 @@ dependencies:
   firebase_core: ^2.27.0
   firebase_auth: ^4.17.8
   cloud_firestore: ^4.15.8
+  mobx: ^2.5.0
+  mask_text_input_formatter: ^2.9.0
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +37,7 @@ flutter:
   assets:
     - assets/images/turmalina_jobs_icon.png
     - assets/images/turmalina_jobs_logo.png
+    - assets/images/app_turmalina_jobs_background.png
 
 flutter_launcher_icons:
   android: true
