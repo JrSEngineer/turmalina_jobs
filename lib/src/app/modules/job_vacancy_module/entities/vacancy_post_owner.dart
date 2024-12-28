@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class VacancyPostOwner {
-  final String id;
-  final String name;
-  final String image;
+  String id;
+  String name;
+  String image;
 
   VacancyPostOwner({
     required this.id,
