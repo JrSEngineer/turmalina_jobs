@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 import 'package:turmalina_jobs/src/app/modules/home/view/widgets/home_menu_widget.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_container.dart';
 import 'package:turmalina_jobs/src/shared/widgets/background_widget.dart';
@@ -15,6 +16,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late BaseIdentifierEntity _accountEntity;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _accountEntity = Modular.args.data;
+  }
+
   @override
   Widget build(BuildContext context) {
     final componentImageSize = MediaQuery.sizeOf(context).height * 0.04;
@@ -49,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 widgets: [
                   IconButton(
                     onPressed: () {
-                      Modular.to.pushNamed('/job_vacancy/create_job_vacancy/');
+                      Modular.to.pushNamed('/job_vacancy/create_job_vacancy/${_accountEntity.id}');
                     },
                     icon: const Icon(
                       Icons.add_circle_outline,
