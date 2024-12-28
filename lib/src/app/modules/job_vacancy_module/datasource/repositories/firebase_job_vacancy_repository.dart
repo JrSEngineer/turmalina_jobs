@@ -14,15 +14,13 @@ class FirebaseJobVacancyRepository implements IJobVacancyRepository {
   @override
   Future<(BaseException?, JobVacancy?)> createNewVacancy(NewVacancyJobInput newVacancy) async {
     try {
-      final vacanciesCollection = _firebase.collection(AppCollections.COMPANIES);
+      final vacanciesCollection = _firebase.collection(AppCollections.VACANCIES);
 
-      final createdVacancyDocumentReference = vacanciesCollection
-          .doc(newVacancy.postOwner.id) //
-          .collection(AppCollections.VACANCIES) //
-          .doc() //
-        ..set(newVacancy.toMap());
+      final createdVacancyDocumentReference = vacanciesCollection.doc();
 
-      createdVacancyDocumentReference.update({'id': createdVacancyDocumentReference.id});
+      await createdVacancyDocumentReference.set(newVacancy.toMap());
+
+      await createdVacancyDocumentReference.update({'id': createdVacancyDocumentReference.id});
 
       final createdVacancyDocument = await createdVacancyDocumentReference.get();
 
@@ -41,7 +39,19 @@ class FirebaseJobVacancyRepository implements IJobVacancyRepository {
   @override
   Future<(BaseException?, List<JobVacancy>?)> getAllVacancies() async {
     try {
-      return (null, <JobVacancy>[]);
+      final vacanciesCollection = _firebase.collection(AppCollections.VACANCIES);
+
+      final collectionReference = await vacanciesCollection.get();
+
+      final jobVacanciesDocumentsList = collectionReference.docs.toList();
+
+      final jobVacanciesList = jobVacanciesDocumentsList.map((document) {
+        final documentMap = document.data();
+
+        return JobVacancy.fromMap(documentMap);
+      }).toList();
+
+      return (null, jobVacanciesList);
     } on FirebaseException catch (firebaseException) {
       return (GetAllJobVacanciesException(message: 'Erro obter vagas. ${firebaseException.message}'), null);
     } catch (exception) {
