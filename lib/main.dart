@@ -12,12 +12,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(
-    _init(),
-  );
+  runApp(_initializeApp());
 }
 
-Widget _init() {
+Widget _initializeApp() {
   return ModularApp(
     module: TurmalinaJobsModule(),
     child: const TurmalinaJobsApp(),

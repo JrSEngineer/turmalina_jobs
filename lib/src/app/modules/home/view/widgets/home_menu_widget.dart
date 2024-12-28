@@ -14,7 +14,7 @@ class HomeMenuWidget extends StatelessWidget {
 
     const cardIconSize = 36.0;
 
-    final cardSize = MediaQuery.sizeOf(context).height * 0.16;
+    final cardSize = MediaQuery.sizeOf(context).height * 0.172;
 
     return SizedBox(
       height: menuHeight,

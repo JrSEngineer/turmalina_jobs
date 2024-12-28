@@ -47,7 +47,7 @@ class AppCardWidget extends StatelessWidget {
             ),
             Text(
               content,
-              style: Theme.of(context).textTheme.displayLarge,
+              style: Theme.of(context).textTheme.displayMedium,
             )
           ],
         ),
