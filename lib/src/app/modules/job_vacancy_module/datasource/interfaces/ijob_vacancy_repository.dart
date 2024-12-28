@@ -4,5 +4,5 @@ import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
 
 abstract class IJobVacancyRepository {
   Future<(BaseException?, List<JobVacancy>?)> getAllVacancies();
-  Future<(BaseException?, JobVacancy)> createNewVacncy(NewVacancyJobInput newVacancy);
+  Future<(BaseException?, JobVacancy?)> createNewVacancy(NewVacancyJobInput newVacancy);
 }
