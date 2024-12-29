@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 import 'package:turmalina_jobs/src/app/modules/home/view/widgets/home_menu_widget.dart';
+import 'package:turmalina_jobs/src/app/modules/home/view/widgets/job_vacancy_card.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/stores/get_all_job_vacancies_store.dart';
 import 'package:turmalina_jobs/src/shared/widgets/app_container.dart';
 import 'package:turmalina_jobs/src/shared/widgets/background_widget.dart';
@@ -95,40 +96,13 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (_, i) {
                                 final jobVacancy = jobVacanciesStore.jobVacanciesList[i];
 
-                                return Card(
-                                  elevation: 8,
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                  surfaceTintColor: Theme.of(context).colorScheme.onPrimary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                      children: [
-                                        GeneralHeaderWidget(
-                                          image: const GeneralHeaderImageWIdget(
-                                            componentImageSize: 72,
-                                            componentImageRadius: 8,
-                                            componentImageRightMargin: componentImageRightMargin,
-                                            imageUrl: image,
-                                          ),
-                                          title: Text(
-                                            jobVacancy.detail.title,
-                                            style: Theme.of(context).textTheme.headlineSmall,
-                                          ),
-                                          subTitle: Text(
-                                            jobVacancy.postOwner.name,
-                                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                                                ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 24),
-                                        Text(jobVacancy.detail.description, style: Theme.of(context).textTheme.bodyLarge)
-                                      ],
-                                    ),
-                                  ),
+                                return JobVacancyCard(
+                                  jobVacancy: jobVacancy,
+                                  onTap: () {
+                                    Modular.to.pushNamed('/job_vacancy/');
+                                  },
+                                  padding: 16,
+                                  radius: 12,
                                 );
                               },
                               separatorBuilder: (_, i) {

@@ -1,11 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:turmalina_jobs/src/app/modules/common/common_module.dart';
-import 'package:turmalina_jobs/src/app/modules/home/view/pages/chat_page.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/pages/chat_page.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/datasource/interfaces/ijob_vacancy_repository.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/datasource/repositories/firebase_job_vacancy_repository.dart';
-import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/page/create_job_vacancy_page.dart';
-import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/page/invite_candidate_page.dart';
-import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/page/job_vacancy_page.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/pages/create_job_vacancy_page.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/pages/invite_candidate_page.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/pages/job_vacancy_page.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/stores/create_job_vacancy_store.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/view/stores/get_all_job_vacancies_store.dart';
 
