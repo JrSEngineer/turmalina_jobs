@@ -14,7 +14,6 @@ class NewAccountInput {
     return <String, dynamic>{
       'email': email,
       'password': password,
-      'confirmationPassword': confirmationPassword,
     };
   }
 }

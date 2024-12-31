@@ -69,7 +69,7 @@ class HomeMenuWidget extends StatelessWidget {
             title: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                'Vagas de Interesse',
+                'Entrevistas Agendadas',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),

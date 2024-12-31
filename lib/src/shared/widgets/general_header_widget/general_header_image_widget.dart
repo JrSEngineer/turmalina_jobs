@@ -13,23 +13,25 @@ class GeneralHeaderImageWIdget extends StatelessWidget {
   final double componentImageSize;
   final double componentImageRightMargin;
   final double componentImageRadius;
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: componentImageSize,
-      margin: EdgeInsets.only(right: componentImageRightMargin),
-      width: componentImageSize,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(componentImageRadius),
-        image: DecorationImage(
-          fit: BoxFit.fill,
-          image: NetworkImage(
-            imageUrl,
-          ),
-        ),
-      ),
-    );
+    return imageUrl != null
+        ? Container(
+            height: componentImageSize,
+            margin: EdgeInsets.only(right: componentImageRightMargin),
+            width: componentImageSize,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(componentImageRadius),
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: NetworkImage(
+                  imageUrl!,
+                ),
+              ),
+            ),
+          )
+        : Container();
   }
 }

@@ -22,7 +22,7 @@ class AppTagWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: padding ?? 1, horizontal: (padding ?? 1) * 2),
+        padding: EdgeInsets.symmetric(vertical: padding ?? 1, horizontal: (padding ?? 1) * 3),
         decoration: BoxDecoration(
           color: tagColor,
           border: Border.all(
