@@ -5,18 +5,23 @@ import 'package:mobx/mobx.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/datasource/interfaces/iauth_repository.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/app_company.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/app_user.dart';
+import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifier_entity.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/entities/inputs/login_input.dart';
 import 'package:turmalina_jobs/src/app/modules/auth/enums/account_type.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
+import 'package:turmalina_jobs/src/shared/info/global_user_data.dart';
+import 'package:turmalina_jobs/src/shared/services/interfaces/iapp_local_storage_service.dart';
 
 part 'auth_store.g.dart';
 
 class AuthStore = _AuthStore with _$AuthStore;
 
 abstract class _AuthStore with Store {
-  _AuthStore(this._repository);
+  _AuthStore(this._repository, this._localStorage);
 
   final IAuthRepository _repository;
+
+  final IAppLocalStorageService<BaseIdentifierEntity, String> _localStorage;
 
   final loginFormKey = GlobalKey<FormState>();
 
@@ -50,10 +55,34 @@ abstract class _AuthStore with Store {
 
     switch (account!.accountType) {
       case AccountType.user:
-        Modular.to.navigate('/home/', arguments: account as AppUser);
+        final user = account as AppUser;
+
+        ACCOUNT_TOKEN = user.token;
+
+        ACCOUNT_ID = user.id;
+
+        await _localStorage.saveMetaData('token', ACCOUNT_TOKEN);
+
+        await _localStorage.saveMetaData('id', ACCOUNT_ID);
+
+        await _localStorage.save(ACCOUNT_ID, user);
+
+        Modular.to.navigate('/home/', arguments: user);
         break;
       case AccountType.company:
-        Modular.to.navigate('/home/', arguments: account as AppCompany);
+        final company = account as AppCompany;
+
+        ACCOUNT_TOKEN = company.token;
+
+        ACCOUNT_ID = company.id;
+
+        await _localStorage.saveMetaData('token', ACCOUNT_TOKEN);
+
+        await _localStorage.saveMetaData('id', ACCOUNT_ID);
+
+        await _localStorage.save(ACCOUNT_ID, company);
+
+        Modular.to.navigate('/home/', arguments: company);
         break;
       default:
         return;

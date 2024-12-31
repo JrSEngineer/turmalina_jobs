@@ -11,3 +11,11 @@ class RegisterAccountException extends BaseException {
 class RecoveryPasswordException extends BaseException {
   RecoveryPasswordException({required super.message});
 }
+
+class SaveAccountDataException extends BaseException {
+  SaveAccountDataException({required super.message});
+}
+
+class RetrieveAccountDataException extends BaseException {
+  RetrieveAccountDataException({required super.message});
+}
