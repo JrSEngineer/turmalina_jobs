@@ -7,6 +7,7 @@ abstract class BaseIdentifierEntity {
   String fullName;
   String document;
   String email;
+  String token;
   AccountType accountType;
 
   BaseIdentifierEntity({
@@ -14,6 +15,7 @@ abstract class BaseIdentifierEntity {
     required this.fullName,
     required this.document,
     required this.email,
+    required this.token,
     required this.accountType,
   });
 }

@@ -8,10 +8,22 @@ class AppUser extends BaseIdentifierEntity {
     required super.fullName,
     required super.document,
     required super.email,
+    required super.token,
     required super.accountType,
   });
 
-  factory AppUser.fromMap(Map<String, dynamic> map) {
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'fullName': fullName,
+      'document': document,
+      'authentication': {'email': email},
+      'token': token,
+      'accountType': accountType.name,
+    };
+  }
+
+  factory AppUser.fromMap(Map map) {
     final accountType = map['accountType'] == 'user' ? AccountType.user : AccountType.company;
 
     return AppUser(
@@ -19,6 +31,7 @@ class AppUser extends BaseIdentifierEntity {
       fullName: map['fullName'],
       document: map['document'],
       email: map['authentication']['email'],
+      token: map['token'],
       accountType: accountType,
     );
   }

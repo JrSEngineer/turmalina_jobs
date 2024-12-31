@@ -36,6 +36,8 @@ class FirebaseAuthRepository implements IAuthRepository {
 
       newUserMap['id'] = credential.user?.uid;
 
+      final token = await credential.user?.getIdToken();
+
       final newUserDocument = usersCollection.doc(newUserMap['id'])..set(newUserMap);
 
       final documentSnapshot = await newUserDocument.get();
@@ -43,6 +45,8 @@ class FirebaseAuthRepository implements IAuthRepository {
       final createdUserMap = documentSnapshot.data();
 
       createdUserMap?.putIfAbsent('email', () => input.newAccountInput.email);
+
+      createdUserMap?.putIfAbsent('token', () => token);
 
       final user = AppUser.fromMap(createdUserMap ?? {});
 
@@ -63,6 +67,8 @@ class FirebaseAuthRepository implements IAuthRepository {
         return (LoginException(message: 'Login não realizado. Verifique seus dados e tente novamente.'), null);
       }
 
+      final token = await credential.user!.getIdToken();
+
       final companiesCollection = _firebase.collection(AppCollections.COMPANIES);
 
       final companyDocument = await companiesCollection.doc(credential.user!.uid).get();
@@ -74,12 +80,16 @@ class FirebaseAuthRepository implements IAuthRepository {
 
         final userMap = userDocument.data();
 
+        userMap?['token'] = token;
+
         final user = AppUser.fromMap(userMap ?? {});
 
         return (null, user);
       }
 
       final companyMap = companyDocument.data();
+
+      companyMap?['token'] = token;
 
       final company = AppCompany.fromMap(companyMap ?? {});
 
