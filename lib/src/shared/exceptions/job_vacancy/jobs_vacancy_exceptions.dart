@@ -12,6 +12,10 @@ class CreateJobVacancyException extends BaseException {
   CreateJobVacancyException({required super.message});
 }
 
+class StartChatException extends BaseException {
+  StartChatException({required super.message});
+}
+
 class InviteCandidateException extends BaseException {
   InviteCandidateException({required super.message});
 }

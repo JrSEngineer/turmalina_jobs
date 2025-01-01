@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/entities/job_vacancy.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/enums/job_vacancy_status.dart';
+import 'package:turmalina_jobs/src/shared/widgets/app_tag_widget.dart';
 import 'package:turmalina_jobs/src/shared/widgets/general_header_widget/general_header_image_widget.dart';
 import 'package:turmalina_jobs/src/shared/widgets/general_header_widget/general_header_widget.dart';
 
@@ -12,25 +13,33 @@ class JobVacancyCard extends StatelessWidget {
     required this.onTap,
     this.radius,
     this.padding,
+    this.componentImageRightMargin,
+    this.componentImageSize,
+    this.componentImageRadius,
+    this.cardDivider,
+    this.postOwnerImage,
+    this.titleStyle,
+    this.subTitleStyle,
+    this.extendedMode = false,
+    this.widgets = const [],
   }) : super(key: key);
 
   final JobVacancy jobVacancy;
-  final Function() onTap;
+  final Function()? onTap;
   final double? radius;
   final double? padding;
+  final double? componentImageRightMargin;
+  final double? componentImageSize;
+  final double? componentImageRadius;
+  final double? cardDivider;
+  final String? postOwnerImage;
+  final TextStyle? titleStyle;
+  final TextStyle? subTitleStyle;
+  final bool? extendedMode;
+  final List<Widget> widgets;
 
   @override
   Widget build(BuildContext context) {
-    const componentImageRightMargin = 12.0;
-
-    const componentImageSize = 72.0;
-
-    const componentImageRadius = 8.0;
-
-    const cardDivider = 24.0;
-
-    const image = 'https://images.pexels.com/photos/93820/pexels-photo-93820.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
-
     return GestureDetector(
       onTap: onTap,
       child: Card(
@@ -45,25 +54,43 @@ class JobVacancyCard extends StatelessWidget {
           child: Column(
             children: [
               GeneralHeaderWidget(
-                image: const GeneralHeaderImageWIdget(
-                  componentImageSize: componentImageSize,
-                  componentImageRadius: componentImageRadius,
-                  componentImageRightMargin: componentImageRightMargin,
-                  imageUrl: image,
+                image: GeneralHeaderImageWIdget(
+                  componentImageSize: componentImageSize ?? 1,
+                  componentImageRadius: componentImageRadius ?? 1,
+                  componentImageRightMargin: componentImageRightMargin ?? 1,
+                  imageUrl: postOwnerImage,
                 ),
                 title: Text(
                   jobVacancy.detail.title,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: titleStyle,
                 ),
                 subTitle: Text(
                   jobVacancy.postOwner.name,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      ),
+                  style: subTitleStyle,
                 ),
+                widgets: [
+                  AppTagWidget(
+                    text: jobVacancy.detail.vacancyStatus == JobVacancyStatus.available ? 'Aberta' : 'Fechada',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    padding: 6,
+                    radius: 36,
+                    borderColor: Theme.of(context).colorScheme.primary,
+                  ),
+                ],
               ),
-              const SizedBox(height: cardDivider),
-              Text(jobVacancy.detail.description, style: Theme.of(context).textTheme.bodyLarge)
+              SizedBox(height: cardDivider ?? 10),
+              Text(jobVacancy.detail.description, style: Theme.of(context).textTheme.bodyLarge),
+              if (extendedMode!)
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: cardDivider ?? 10),
+                      ...widgets,
+                    ],
+                  ),
+                ),
             ],
           ),
         ),

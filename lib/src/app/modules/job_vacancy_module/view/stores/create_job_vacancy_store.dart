@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/datasource/interfaces/ijob_vacancy_repository.dart';
+import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/entities/candiate_user.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/entities/inputs/new_vacancy_job_input.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/entities/vacancy_detail.dart';
 import 'package:turmalina_jobs/src/app/modules/job_vacancy_module/entities/vacancy_post_owner.dart';
@@ -45,6 +46,7 @@ abstract class _CreateJobVacancyStore with Store {
       sectionName: '',
       vacancyStatus: JobVacancyStatus.available,
     ),
+    candidates: <CandidateUser>[],
   );
 
   Future<void> createNewJobVacancy() async {
