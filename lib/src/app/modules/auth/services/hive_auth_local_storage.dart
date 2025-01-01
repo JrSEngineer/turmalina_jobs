@@ -5,6 +5,7 @@ import 'package:turmalina_jobs/src/app/modules/auth/entities/base/base_identifie
 import 'package:turmalina_jobs/src/app/modules/auth/enums/account_type.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/auth/auth_exceptions.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
+import 'package:turmalina_jobs/src/shared/info/global_user_data.dart';
 import 'package:turmalina_jobs/src/shared/services/interfaces/iapp_local_storage_service.dart';
 
 class HiveAuthLocalStorage implements IAppLocalStorageService<BaseIdentifierEntity, String> {
@@ -15,11 +16,11 @@ class HiveAuthLocalStorage implements IAppLocalStorageService<BaseIdentifierEnti
   @override
   Future<(BaseException?, BaseIdentifierEntity?)> save(String key, BaseIdentifierEntity data) async {
     try {
-      Box<Map<String, dynamic>> authBox;
+      Box<Map> authBox;
 
       Map<String, dynamic> dataMap = {};
 
-      authBox = await _hive.openBox<Map<String, dynamic>>('auth');
+      authBox = await _hive.openBox<Map>('auth');
 
       switch (data.accountType) {
         case AccountType.user:
@@ -120,5 +121,14 @@ class HiveAuthLocalStorage implements IAppLocalStorageService<BaseIdentifierEnti
     } catch (exception) {
       return (RetrieveAccountDataException(message: 'Erro ao obter informações locais: ${exception.toString()}'), null);
     }
+  }
+
+  @override
+  Future<void> clearStorage() async {
+    ACCOUNT_ID = '';
+
+    ACCOUNT_TOKEN = '';
+
+    await _hive.deleteFromDisk();
   }
 }

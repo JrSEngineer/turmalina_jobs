@@ -93,6 +93,12 @@ abstract class _AuthStore with Store {
     return;
   }
 
+  Future<void> signOut() async {
+    await _repository.signOut();
+
+    Modular.to.navigate('/');
+  }
+
   @action
   _setLoadingValue(bool value) {
     _loading = value;

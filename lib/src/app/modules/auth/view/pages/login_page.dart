@@ -37,16 +37,17 @@ class _LoginPageState extends State<LoginPage> {
 
 Widget _child(BuildContext context, AuthStore store) {
   final formPadding = MediaQuery.sizeOf(context).height * 0.024;
-  final buttonVerticalPadding = MediaQuery.sizeOf(context).height * 0.016;
+  final buttonVerticalPadding = MediaQuery.sizeOf(context).height * 0.012;
   final pageGapSpacing = MediaQuery.sizeOf(context).height * 0.1;
   final width = MediaQuery.sizeOf(context).width;
 
-  return ListView(
-    physics: const NeverScrollableScrollPhysics(),
-    children: [
-      Column(
+  return Scaffold(
+    body: SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          SizedBox(height: pageGapSpacing * 0.5),
           AppLogo(
             size: LogoSize.medium,
           ),
@@ -94,70 +95,70 @@ Widget _child(BuildContext context, AuthStore store) {
               ],
             ),
           ),
-        ],
-      ),
-      SizedBox(height: pageGapSpacing),
-      Column(
-        children: [
-          Observer(
-            builder: (_) {
-              return AppButton(
-                onTap: () async {
-                  if (!store.loginFormKey.currentState!.validate()) {
-                    return;
-                  }
-
-                  await store.login();
-
-                  if (store.loginException != null) {
-                    appSnackbar(context, message: 'Erro ao realizar login. ${store.loginException!.message}');
-
-                    return;
-                  }
-                },
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                verticalPadding: buttonVerticalPadding,
-                child: store.loading //
-                    ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary)
-                    : Text(
-                        'Entrar',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                      ),
-              );
-            },
-          ),
-          SizedBox(height: pageGapSpacing * 0.1),
-          AppDivider(width: width, text: 'Ou'),
-          SizedBox(height: pageGapSpacing * 0.1),
-          AppButton(
-            onTap: () {},
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-            backgroundColor: Theme.of(context).colorScheme.onPrimary,
-            verticalPadding: buttonVerticalPadding,
-            borderColor: Theme.of(context).colorScheme.secondary,
-            child: Text(
-              'Use sua conta Google',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-          ),
           SizedBox(height: pageGapSpacing),
-          Text('Caso ainda não tenha uma conta', style: Theme.of(context).textTheme.titleMedium),
-          TextButton(
-            onPressed: () {
-              Modular.to.pushNamed('./register');
-            },
-            child: Text(
-              'Cadastre-se',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+          Column(
+            children: [
+              Observer(
+                builder: (_) {
+                  return AppButton(
+                    onTap: () async {
+                      if (!store.loginFormKey.currentState!.validate()) {
+                        return;
+                      }
+
+                      await store.login();
+
+                      if (store.loginException != null) {
+                        appSnackbar(context, message: 'Erro ao realizar login. ${store.loginException!.message}');
+
+                        return;
+                      }
+                    },
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    verticalPadding: buttonVerticalPadding,
+                    child: store.loading //
+                        ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary)
+                        : Text(
+                            'Entrar',
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),
+                          ),
+                  );
+                },
+              ),
+              SizedBox(height: pageGapSpacing * 0.1),
+              AppDivider(width: width, text: 'Ou'),
+              SizedBox(height: pageGapSpacing * 0.1),
+              AppButton(
+                onTap: () {},
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                verticalPadding: buttonVerticalPadding,
+                borderColor: Theme.of(context).colorScheme.secondary,
+                child: Text(
+                  'Use sua conta Google',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              SizedBox(height: pageGapSpacing * 0.5),
+              Text('Caso ainda não tenha uma conta', style: Theme.of(context).textTheme.titleMedium),
+              TextButton(
+                onPressed: () {
+                  Modular.to.pushNamed('./register');
+                },
+                child: Text(
+                  'Cadastre-se',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ),
+            ],
           ),
         ],
       ),
-    ],
+    ),
   );
 }

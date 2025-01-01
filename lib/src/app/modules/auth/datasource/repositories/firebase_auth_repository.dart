@@ -12,13 +12,20 @@ import 'package:turmalina_jobs/src/app/modules/auth/enums/account_type.dart';
 import 'package:turmalina_jobs/src/shared/backend/app_collections.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/auth/auth_exceptions.dart';
 import 'package:turmalina_jobs/src/shared/exceptions/base_exception.dart';
+import 'package:turmalina_jobs/src/shared/services/interfaces/iapp_local_storage_service.dart';
 
 class FirebaseAuthRepository implements IAuthRepository {
-  FirebaseAuthRepository(this._auth, this._firebase);
+  FirebaseAuthRepository(
+    this._auth,
+    this._firebase,
+    this._localStorage,
+  );
 
   final FirebaseAuth _auth;
 
   final FirebaseFirestore _firebase;
+
+  final IAppLocalStorageService<BaseIdentifierEntity, String> _localStorage;
 
   @override
   Future<(BaseException?, BaseIdentifierEntity?)> createNewAccount(BaseAccountInput input) async {
@@ -105,6 +112,13 @@ class FirebaseAuthRepository implements IAuthRepository {
   Future<BaseException?> recoverPassword(RecoveryPasswordInput input) {
     // TODO: implement recoverPassword
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> signOut() async {
+    await _auth.signOut();
+
+    await _localStorage.clearStorage();
   }
 
   String _setUserCollection(AccountType accountType) {

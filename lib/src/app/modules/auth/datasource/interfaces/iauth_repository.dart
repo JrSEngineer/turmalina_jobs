@@ -8,4 +8,5 @@ abstract class IAuthRepository {
   Future<(BaseException?, BaseIdentifierEntity?)> createNewAccount(BaseAccountInput input);
   Future<(BaseException?, BaseIdentifierEntity?)> login(LoginInput input);
   Future<BaseException?> recoverPassword(RecoveryPasswordInput input);
+  Future<void> signOut();
 }

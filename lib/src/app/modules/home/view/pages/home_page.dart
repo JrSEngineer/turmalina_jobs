@@ -37,10 +37,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final componentImageSize = MediaQuery.sizeOf(context).height * 0.04;
-    const componentImageRadius = 45.0;
+
+    final componentImageRadius = MediaQuery.sizeOf(context).height * 0.042;
+
     const componentImageRightMargin = 12.0;
 
+    final componentCardImageSize = MediaQuery.sizeOf(context).height * 0.056;
+
+    const componentCardImageRadius = 8.0;
+
     final pageSpacing = MediaQuery.sizeOf(context).height * 0.056;
+
     const image = 'https://images.pexels.com/photos/93820/pexels-photo-93820.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -52,6 +59,9 @@ class _HomePageState extends State<HomePage> {
             children: [
               GeneralHeaderWidget(
                 image: GeneralHeaderImageWIdget(
+                  onTap: () {
+                    Modular.to.pushNamed('./profile', arguments: _account);
+                  },
                   componentImageSize: componentImageSize,
                   componentImageRightMargin: componentImageRightMargin,
                   componentImageRadius: componentImageRadius,
@@ -99,8 +109,13 @@ class _HomePageState extends State<HomePage> {
                                 return JobVacancyCard(
                                   jobVacancy: jobVacancy,
                                   onTap: () {
-                                    Modular.to.pushNamed('/job_vacancy/');
+                                    Modular.to.pushNamed('/job_vacancy/${_account.id}', arguments: jobVacancy);
                                   },
+                                  componentImageRightMargin: componentImageRightMargin,
+                                  postOwnerImage: image,
+                                  cardDivider: 24,
+                                  componentImageSize: componentCardImageSize,
+                                  componentImageRadius: componentCardImageRadius,
                                   padding: 16,
                                   radius: 12,
                                 );

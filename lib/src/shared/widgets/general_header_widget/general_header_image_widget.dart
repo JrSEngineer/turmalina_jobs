@@ -8,26 +8,31 @@ class GeneralHeaderImageWIdget extends StatelessWidget {
     required this.componentImageRightMargin,
     required this.componentImageRadius,
     required this.imageUrl,
+    this.onTap,
   }) : super(key: key);
 
   final double componentImageSize;
   final double componentImageRightMargin;
   final double componentImageRadius;
   final String? imageUrl;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return imageUrl != null
-        ? Container(
-            height: componentImageSize,
-            margin: EdgeInsets.only(right: componentImageRightMargin),
-            width: componentImageSize,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(componentImageRadius),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(
-                  imageUrl!,
+        ? GestureDetector(
+            onTap: onTap,
+            child: Container(
+              height: componentImageSize,
+              margin: EdgeInsets.only(right: componentImageRightMargin),
+              width: componentImageSize,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(componentImageRadius),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(
+                    imageUrl!,
+                  ),
                 ),
               ),
             ),
